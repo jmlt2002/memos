@@ -60,7 +60,12 @@ const MemoView: React.FC<Props> = (props: Props) => {
   const parentPage = props.parentPage || location.pathname;
   const nsfw =
     workspaceMemoRelatedSetting.enableBlurNsfwContent &&
-    memo.tags?.some((tag) => workspaceMemoRelatedSetting.nsfwTags.includes(tag.toLowerCase()));
+    memo.tags?.some((tag) => {
+      return (
+        tag.includes("nsfw") ||
+        workspaceMemoRelatedSetting.nsfwTags.includes(tag)
+      );
+    });
 
   // Initial related data: creator.
   useAsyncEffect(async () => {
